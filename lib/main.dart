@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:isha/pages/about_page.dart';
+import 'package:isha/pages/settings_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -6,6 +8,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
+  static const String dbName = "isha.database";
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       home: const MyHomePage(title: 'iSha'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -42,6 +47,41 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                const PopupMenuItem(
+                  value: 0,
+                  child: Text("Settings"),
+                ),
+                const PopupMenuItem(
+                  value: 1,
+                  child: Text("About"),
+                ),
+              ];
+            },
+            onSelected: (value) {
+              if (value == 0) {
+                // go to settings page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => SettingsPage(),
+                  ),
+                );
+              } else if (value == 1) {
+                // go to about page
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => AboutPage(),
+                  ),
+                );
+              }
+            },
+          )
+        ],
       ),
       body: Center(
         child: Column(
